@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "383880335291",
+    "project_id": "instagram-8787b",
+    "storage_bucket": "instagram-8787b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383880335291:android:32ed19ec4aa9a9df7afe9e",
+        "android_client_info": {
+          "package_name": "com.android.guicelebrini.instagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383880335291-avfc9lf6ken74jka1g7t57k16usunh2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.guicelebrini.instagram",
+            "certificate_hash": "ce53e110e1d0d3751ceabbca6c052728884d5b18"
+          }
+        },
+        {
+          "client_id": "383880335291-lgegdaahmmbsb9t48da9g387kvvc9k68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAFoN6SIGOUm9-gjpcnq1LAgA9IXR_Nbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383880335291-lgegdaahmmbsb9t48da9g387kvvc9k68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383880335291:android:d075065e7b3758db7afe9e",
+        "android_client_info": {
+          "package_name": "com.guicelebrini.instagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383880335291-lgegdaahmmbsb9t48da9g387kvvc9k68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAFoN6SIGOUm9-gjpcnq1LAgA9IXR_Nbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383880335291-lgegdaahmmbsb9t48da9g387kvvc9k68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
