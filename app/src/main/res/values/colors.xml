@@ -10,4 +10,5 @@
     <color name="gradient_pink">#C53766</color>
     <color name="gradient_purple">#8149AA</color>
     <color name="primary_purple">#6C2B9C</color>
+    <color name="opaque_white">#60FFFFFF</color>
 </resources>
