@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Instagram</string>
+    <string name="text_register"><u>Ainda não tem conta? Cadastre-se!</u></string>
 </resources>
