@@ -9,7 +9,7 @@ public class FirebaseConfig {
     private static FirebaseFirestore firestore;
 
     public static FirebaseAuth getFirebaseAuthInstance(){
-        if (auth != null) {
+        if (auth == null) {
             auth = FirebaseAuth.getInstance();
         }
 
@@ -17,7 +17,7 @@ public class FirebaseConfig {
     }
 
     public static FirebaseFirestore getFirestoreInstance(){
-        if (firestore != null) {
+        if (firestore == null) {
             firestore = FirebaseFirestore.getInstance();
         }
 
