@@ -3,6 +3,10 @@ package com.android.guicelebrini.instagram.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +18,7 @@ import android.widget.Button;
 
 import com.android.guicelebrini.instagram.R;
 import com.android.guicelebrini.instagram.config.FirebaseConfig;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,6 +27,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbarMain;
+    private BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +35,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViewsById();
         configureToolbar();
-
-
+        configureBottomNavigation();
+        
     }
 
     private void findViewsById(){
         toolbarMain = findViewById(R.id.toolbar_main);
+        bottomNavigation = findViewById(R.id.bottomNavigationMain);
     }
 
     private void configureToolbar(){
         setSupportActionBar(toolbarMain);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarMain.setLogo(R.drawable.logo_toolbar);
+    }
+
+    private void configureBottomNavigation(){
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerMain);
+
+        NavController navController = navHostFragment.getNavController();
+
+        NavigationUI.setupWithNavController(bottomNavigation, navController);
     }
 
     @Override
