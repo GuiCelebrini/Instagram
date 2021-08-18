@@ -1,9 +1,14 @@
 package com.android.guicelebrini.instagram.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,32 +21,57 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonLogout;
+    private Toolbar toolbarMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewsById();
+        configureToolbar();
 
-        buttonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth auth = FirebaseConfig.getFirebaseAuthInstance();
-                auth.signOut();
-                goToLoginActivity();
-                finish();
-            }
-        });
 
+    }
+
+    private void findViewsById(){
+        toolbarMain = findViewById(R.id.toolbar_main);
+    }
+
+    private void configureToolbar(){
+        setSupportActionBar(toolbarMain);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarMain.setLogo(R.drawable.logo_toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_logout:
+                logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void logout(){
+        FirebaseAuth auth = FirebaseConfig.getFirebaseAuthInstance();
+        auth.signOut();
+        goToLoginActivity();
     }
 
     private void goToLoginActivity(){
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
-    }
-
-    private void findViewsById(){
-        buttonLogout = findViewById(R.id.buttonLogout);
+        finish();
     }
 }

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Instagram</string>
     <string name="text_register"><u>Ainda não tem conta? Cadastre-se!</u></string>
+    <string name="toolbar_title"></string>
+
+    <string name="action_add_photo">Adicionar foto</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_logout">Sair</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

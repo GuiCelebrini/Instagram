@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add_photo"
+        android:title="@string/action_add_photo"
+        android:icon="@drawable/ic_baseline_add_a_photo_24"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/action_share"
+        android:icon="@drawable/ic_baseline_share_24"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="never">
+    </item>
+
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/action_logout"
+        app:showAsAction="never">
+    </item>
+</menu>
