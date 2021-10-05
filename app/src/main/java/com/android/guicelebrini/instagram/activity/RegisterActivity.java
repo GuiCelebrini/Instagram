@@ -42,8 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createUser();
-                goToLoginActivity();
-                finish();
             }
         });
     }
@@ -63,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

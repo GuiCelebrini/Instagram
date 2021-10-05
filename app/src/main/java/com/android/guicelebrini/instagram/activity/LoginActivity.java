@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         findViewsById();
 
         auth = FirebaseConfig.getFirebaseAuthInstance();
-        verifyLoggedUser();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +38,12 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        verifyLoggedUser();
     }
 
     private void verifyLoggedUser(){
@@ -82,6 +87,5 @@ public class LoginActivity extends AppCompatActivity {
     public void goToRegisterActivity(View view){
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(intent);
-        finish();
     }
 }
