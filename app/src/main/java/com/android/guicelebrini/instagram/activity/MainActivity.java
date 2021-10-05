@@ -1,6 +1,7 @@
 package com.android.guicelebrini.instagram.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -10,6 +11,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbarMain;
     private BottomNavigationView bottomNavigation;
+
+    private static final int SHARE_PHOTO_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +75,30 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
+            case R.id.action_add_photo:
+                sharePhoto();
+                return true;
             case R.id.action_logout:
                 logout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void sharePhoto() {
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, SHARE_PHOTO_REQUEST_CODE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SHARE_PHOTO_REQUEST_CODE && resultCode == RESULT_OK && data != null){
+            Log.i("onActivityResult", "Foto adicionada");
         }
     }
 
