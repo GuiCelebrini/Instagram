@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -24,6 +25,8 @@ import com.android.guicelebrini.instagram.config.FirebaseConfig;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
@@ -33,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
 
     private static final int SHARE_PHOTO_REQUEST_CODE = 1;
+    private StorageReference storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        storage = FirebaseConfig.getStorageInstance();
+
         findViewsById();
         configureToolbar();
         configureBottomNavigation();
@@ -99,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == SHARE_PHOTO_REQUEST_CODE && resultCode == RESULT_OK && data != null){
             Log.i("onActivityResult", "Foto adicionada");
+
+            Uri imageAdress = data.getData();
+
+            //StorageReference reference = storage.child("images/1.png");
+
         }
     }
 
