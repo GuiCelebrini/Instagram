@@ -22,11 +22,14 @@ import android.widget.Button;
 
 import com.android.guicelebrini.instagram.R;
 import com.android.guicelebrini.instagram.config.FirebaseConfig;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
@@ -104,11 +107,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == SHARE_PHOTO_REQUEST_CODE && resultCode == RESULT_OK && data != null){
-            Log.i("onActivityResult", "Foto adicionada");
+
 
             Uri imageAdress = data.getData();
 
-            //StorageReference reference = storage.child("images/1.png");
+            StorageReference reference = storage.child("images/1");
+
+            reference.putFile(imageAdress)
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            Log.i("onActivityResult", "Photo added successfully");
+                        } else {
+                            Log.i("onActivityResult", "Photo couldn't be added");
+                        }
+                    });
 
         }
     }
