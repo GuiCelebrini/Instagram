@@ -23,6 +23,7 @@ import android.widget.Button;
 import com.android.guicelebrini.instagram.R;
 import com.android.guicelebrini.instagram.config.FirebaseConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -114,15 +115,23 @@ public class MainActivity extends AppCompatActivity {
             StorageReference reference = storage.child("images/1");
 
             reference.putFile(imageAdress)
-                    .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-                            Log.i("onActivityResult", "Photo added successfully");
-                        } else {
-                            Log.i("onActivityResult", "Photo couldn't be added");
-                        }
+                    .addOnSuccessListener(taskSnapshot -> {
+                        getDownloadUrl(reference, downloadUrl -> {
+                            Log.i("Resultado", downloadUrl.toString());
+                        });
                     });
 
         }
+    }
+
+    private interface GetDownloadUrlCallback{
+        void complete(Uri downloadUrl);
+    }
+
+    private void getDownloadUrl(StorageReference reference, GetDownloadUrlCallback downloadUrlCallback){
+        reference.getDownloadUrl().addOnSuccessListener(uri -> {
+            downloadUrlCallback.complete(uri);
+        });
     }
 
     private void logout(){
