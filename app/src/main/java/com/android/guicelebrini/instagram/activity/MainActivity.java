@@ -22,6 +22,7 @@ import android.widget.Button;
 
 import com.android.guicelebrini.instagram.R;
 import com.android.guicelebrini.instagram.config.FirebaseConfig;
+import com.android.guicelebrini.instagram.helper.Preferences;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         storage = FirebaseConfig.getStorageInstance();
+
+        Preferences preferences = new Preferences(getApplicationContext());
+        Log.i("Resultado", preferences.getUserId() + " | " + preferences.getUserName());
 
         findViewsById();
         configureToolbar();

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.android.guicelebrini.instagram.R;
 import com.android.guicelebrini.instagram.config.FirebaseConfig;
 import com.android.guicelebrini.instagram.helper.Base64Custom;
+import com.android.guicelebrini.instagram.helper.Preferences;
 import com.android.guicelebrini.instagram.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        saveInPreferences(user);
                         finish();
                     }
                 })
@@ -73,6 +75,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         String encodedUserEmail = Base64Custom.encode(user.getEmail());
         db.collection("users").document(encodedUserEmail).set(user);
+    }
+
+    private void saveInPreferences(User user) {
+
+        Preferences preferences = new Preferences(getApplicationContext());
+        String loggedUserId = Base64Custom.encode(user.getEmail());
+
+        preferences.saveData(loggedUserId, user.getName());
+
     }
 
     private void goToLoginActivity(){
