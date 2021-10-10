@@ -42,12 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int SHARE_PHOTO_REQUEST_CODE = 1;
     private StorageReference storage;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         storage = FirebaseConfig.getStorageInstance();
+        db = FirebaseFirestore.getInstance();
 
         Preferences preferences = new Preferences(getApplicationContext());
         Log.i("Resultado", preferences.getUserId() + " | " + preferences.getUserName());
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             reference.putFile(imageAdress)
                     .addOnSuccessListener(taskSnapshot -> {
                         getDownloadUrl(reference, downloadUrl -> {
-                            Log.i("Resultado", downloadUrl.toString());
+
                         });
                     });
 
