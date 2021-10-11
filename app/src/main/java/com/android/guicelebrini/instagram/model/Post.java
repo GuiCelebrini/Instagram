@@ -3,15 +3,15 @@ package com.android.guicelebrini.instagram.model;
 public class Post {
 
     private String user;
-    private String image;
+    private String imageUrl;
 
     public Post(){
 
     }
 
-    public Post(String user, String image) {
+    public Post(String user, String imageUrl) {
         this.user = user;
-        this.image = image;
+        this.imageUrl = imageUrl;
     }
 
     public String getUser() {
@@ -22,11 +22,11 @@ public class Post {
         this.user = user;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -19,15 +19,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.guicelebrini.instagram.R;
 import com.android.guicelebrini.instagram.config.FirebaseConfig;
 import com.android.guicelebrini.instagram.helper.Preferences;
+import com.android.guicelebrini.instagram.model.Post;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,15 +47,15 @@ public class MainActivity extends AppCompatActivity {
     private StorageReference storage;
     private FirebaseFirestore db;
 
+    private Preferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         storage = FirebaseConfig.getStorageInstance();
         db = FirebaseFirestore.getInstance();
-
-        Preferences preferences = new Preferences(getApplicationContext());
-        Log.i("Resultado", preferences.getUserId() + " | " + preferences.getUserName());
+        preferences = new Preferences(getApplicationContext());
 
         findViewsById();
         configureToolbar();
@@ -115,19 +118,29 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == SHARE_PHOTO_REQUEST_CODE && resultCode == RESULT_OK && data != null){
 
+            String loggedUserId = preferences.getUserId();
+            String loggedUserName = preferences.getUserName();
 
             Uri imageAdress = data.getData();
 
-            StorageReference reference = storage.child("images/1");
-
-            reference.putFile(imageAdress)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        getDownloadUrl(reference, downloadUrl -> {
-
-                        });
+            Post post = new Post(loggedUserName, "");
+            db.collection("users").document(loggedUserId).collection("posts").add(post)
+                    .addOnSuccessListener(documentReference -> {
+                        String postId = documentReference.getId();
+                        saveImageInStorage(postId, imageAdress);
                     });
 
         }
+    }
+
+    private void saveImageInStorage(String postId, Uri imageAdress){
+        StorageReference reference = storage.child("images/" + postId + "/1");
+        reference.putFile(imageAdress)
+                .addOnSuccessListener(taskSnapshot -> {
+                    getDownloadUrl(reference, downloadUrl -> {
+                        addImageUrlInFirestore(postId ,downloadUrl);
+                    });
+                });
     }
 
     private interface GetDownloadUrlCallback{
@@ -138,6 +151,17 @@ public class MainActivity extends AppCompatActivity {
         reference.getDownloadUrl().addOnSuccessListener(uri -> {
             downloadUrlCallback.complete(uri);
         });
+    }
+
+    private void addImageUrlInFirestore(String postId, Uri downloadUrl) {
+        String imageDownloadUrl = downloadUrl.toString();
+        String loggedUserId = preferences.getUserId();
+
+        db.collection("users").document(loggedUserId).collection("posts").document(postId).update("imageUrl", imageDownloadUrl)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(getApplicationContext(), "Seu post foi salvo com sucesso", Toast.LENGTH_SHORT).show();
+                });
+
     }
 
     private void logout(){
