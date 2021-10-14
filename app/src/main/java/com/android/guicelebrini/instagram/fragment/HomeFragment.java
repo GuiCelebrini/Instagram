@@ -43,9 +43,14 @@ public class HomeFragment extends Fragment {
     private Preferences preferences;
 
     private FirebaseFirestore db;
+    private String userId = "";
 
-    public HomeFragment() {
+    public HomeFragment(){
         // Required empty public constructor
+    }
+
+    public HomeFragment(String firestoreId){
+        this.userId = firestoreId;
     }
 
     @Override
@@ -55,6 +60,8 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         findViewsById();
         preferences = new Preferences(view.getContext());
+
+        isFromLoggedUser(userId);
 
         createPostsList();
 
@@ -67,11 +74,16 @@ public class HomeFragment extends Fragment {
         recyclerPosts = view.findViewById(R.id.recycler_posts);
     }
 
+    private void isFromLoggedUser(String userId){
+        if (userId.equals("")){
+            this.userId = preferences.getUserId();
+        }
+    }
+
     private void createPostsList(){
-        String loggedUserId = preferences.getUserId();
         db = FirebaseFirestore.getInstance();
 
-        db.collection("users").document(loggedUserId).collection("posts")
+        db.collection("users").document(userId).collection("posts")
                 .orderBy("createdAt", Query.Direction.DESCENDING).get()
                 .addOnCompleteListener(task -> {
 

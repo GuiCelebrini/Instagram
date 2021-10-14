@@ -1,5 +1,6 @@
 package com.android.guicelebrini.instagram.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.android.guicelebrini.instagram.R;
+import com.android.guicelebrini.instagram.activity.FeedActivity;
 import com.android.guicelebrini.instagram.adapter.AdapterRecyclerUsers;
 import com.android.guicelebrini.instagram.helper.Base64Custom;
 import com.android.guicelebrini.instagram.helper.Preferences;
+import com.android.guicelebrini.instagram.helper.RecyclerItemClickListener;
 import com.android.guicelebrini.instagram.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -99,6 +103,30 @@ public class UsersFragment extends Fragment {
 
         recyclerUsers.setLayoutManager(layoutManager);
         recyclerUsers.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayout.VERTICAL));
+        recyclerUsers.addOnItemTouchListener(new RecyclerItemClickListener(view.getContext(), recyclerUsers, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                User user = usersList.get(position);
+
+                Intent intent = new Intent(view.getContext(), FeedActivity.class);
+
+                String firestoreId = Base64Custom.encode(user.getEmail());
+
+                intent.putExtra("firestoreId", firestoreId);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        }));
 
         recyclerUsers.setAdapter(adapter);
 
