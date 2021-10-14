@@ -25,6 +25,7 @@ public class FeedActivity extends AppCompatActivity {
 
     private void configureToolbar(){
         toolbar.setLogo(R.drawable.logo_toolbar);
+        toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setSupportActionBar(toolbar);
     }
